@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amir-node-redis
+  labels:
+    purpose: amir-node-redis
+    app: amir-node-redis
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: amir-node-redis
+  template:
+    metadata:
+      labels:
+        app: amir-node-redis
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: amir-node-redis
+          image: cloud.canister.io:5000/arhturescriou/node-redis
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:        
+            - name: PORT
+              value: '5000'
+            - name: REDIS_URL
+              value: 'redis://amir-redis-service:6379'

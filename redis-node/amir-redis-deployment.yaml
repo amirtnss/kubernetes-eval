@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amir-redis
+  labels:
+    app: amir-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amir-redis
+  template:
+    metadata:
+      labels:
+        app: amir-redis
+    spec:
+      containers:
+        - name: amir-redis
+          image: redis
+          ports:
+            - containerPort: 6379
